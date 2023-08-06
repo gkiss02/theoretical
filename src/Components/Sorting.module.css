@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 10rem;
+    gap: 1rem;
+}
+
+.element  {
+    width: 1.5rem;
+    background-color: white;
+}
