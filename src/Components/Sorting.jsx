@@ -2,17 +2,20 @@ import React, { useState, useEffect } from 'react';
 import styles from './Sorting.module.css';
 import quickSort from  '../Sortings/quickSort'
 import bubbleSort from  '../Sortings/bubbleSort'
-import bogoSort from '../Sortings/bogoSort';
+import insertionSort from  '../Sortings/insertionSort'
+import selectionSort from  '../Sortings/selectionSort'
+import mergeSort from '../Sortings/mergeSort'
 
 function Sorting() {
     const [elements, setElements] = useState([]);
     const [isSorting, setIsSorting] = useState(false);
     const [sortingType, setSortingType] = useState('bubbleSort');
+    const [sorted, setSorted] = useState(false);
+    const [warningText, setWarningText] = useState(false);
 
     function sortingChangeHandler(event) {
         const value = event.target.value;
         setSortingType(value);
-        console.log(value);
     }
 
     useEffect(() => {
@@ -32,8 +35,13 @@ function shuffle() {
     }
     arr.sort((a, b) => 0.5 - Math.random());
     setElements(arr);
+    setSorted(false);
+    setWarningText(false);
 }
 
+function warningTextHandle() {
+    setWarningText(true);
+}
 
 async function clickHandle(event) {
     event.preventDefault();
@@ -47,13 +55,20 @@ async function clickHandle(event) {
             case 'quickSort':
                 arr = await quickSort(arr, 0, arr.length -1, setElements, sleep);
                 break;
-            case 'bogoSort':
-                arr = await bogoSort(arr, setElements, sleep);
+            case 'insertionSort':
+                arr = await insertionSort(arr, setElements, sleep);
                 break;
+            case 'selectionSort':
+                arr = await selectionSort(arr, setElements, sleep);
+                break;  
+            case 'mergeSort':
+                arr = await mergeSort(arr, setElements, sleep);
+                break;          
             default:
                 break;
         }
         setIsSorting(false);
+        setSorted(true);
     }
 }
 
@@ -64,17 +79,20 @@ return (
                 <div key={item} className={styles.element} style={{ height: `${item}rem` }}></div>
             )}
         </div>
-        <div>
-            <select onChange={sortingChangeHandler}>
+        <div className={styles['control-container']}>
+            <select onChange={sortingChangeHandler} className={styles.select} disabled={isSorting}>
                 <option value="bubbleSort">Bubble Sort</option>
                 <option value="quickSort">Quick Sort</option>
-                <option value="bogoSort">Bogo Sort</option>
+                <option value="insertionSort">Insertion Sort</option>
+                <option value="selectionSort">Selection Sort</option>
+                <option value="mergeSort">Merge Sort</option>
             </select>
-            <button onClick={clickHandle} disabled={isSorting}>
+            <button onClick={!sorted ? clickHandle : warningTextHandle} disabled={isSorting} className={styles.button}>
                 {isSorting ? 'Sorting...' : 'Sort'}
             </button>
-            <button onClick={shuffle}>Shuffle</button>
+            <button onClick={shuffle} disabled={isSorting} className={styles.button}>Shuffle</button>
         </div>
+        {warningText && <p className={styles.text}>Please shuffle first!</p>}
     </div>
 )}
 
