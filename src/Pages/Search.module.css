@@ -1,0 +1,48 @@
+.elements-container {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    width: min-content;
+    gap: 3rem 1.5rem;
+}
+
+.element {
+    width: 5rem;
+    height: 5rem;
+    border: 1px white solid;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    border-radius: 5px;
+}
+
+.active {
+    background-color: red;
+} 
+
+.find {
+    background-color: lightgreen;
+}
+
+.label {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.number-input {
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    padding: 0 1rem;
+    height: 2.5rem;
+    width: 5rem;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

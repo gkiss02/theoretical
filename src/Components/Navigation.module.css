@@ -1,0 +1,28 @@
+.container {
+    margin-bottom: 10rem;
+}
+
+li {
+    list-style: none;
+}
+
+.menu-items_container {
+    display: flex;
+    gap: 2rem;
+    font-size: 1.5rem;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a.active::after {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 10px;
+    background-color: white;
+    margin: .3rem auto;
+}

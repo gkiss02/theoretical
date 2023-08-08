@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Sorting.module.css';
 import quickSort from  '../Sortings/quickSort'
 import bubbleSort from  '../Sortings/bubbleSort'
 import insertionSort from  '../Sortings/insertionSort'
 import selectionSort from  '../Sortings/selectionSort'
 import mergeSort from '../Sortings/mergeSort'
+import Button from '../Components/Button'
+import ButtonContainer from '../UI/ControlContainer';
+import sleep from '../HelperFunctions/sleep';
 
 function Sorting() {
     const [elements, setElements] = useState([]);
@@ -21,10 +24,6 @@ function Sorting() {
     useEffect(() => {
         shuffle();
     }, []);
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 function shuffle() {
     const arr = [];
@@ -79,7 +78,7 @@ return (
                 <div key={item} className={styles.element} style={{ height: `${item}rem` }}></div>
             )}
         </div>
-        <div className={styles['control-container']}>
+        <ButtonContainer>
             <select onChange={sortingChangeHandler} className={styles.select} disabled={isSorting}>
                 <option value="bubbleSort">Bubble Sort</option>
                 <option value="quickSort">Quick Sort</option>
@@ -87,11 +86,9 @@ return (
                 <option value="selectionSort">Selection Sort</option>
                 <option value="mergeSort">Merge Sort</option>
             </select>
-            <button onClick={!sorted ? clickHandle : warningTextHandle} disabled={isSorting} className={styles.button}>
-                {isSorting ? 'Sorting...' : 'Sort'}
-            </button>
-            <button onClick={shuffle} disabled={isSorting} className={styles.button}>Shuffle</button>
-        </div>
+            <Button onClick={!sorted ? clickHandle : warningTextHandle} disabled={isSorting}>{isSorting ? 'Sorting...' : 'Sort'}</Button>
+            <Button onClick={shuffle} disabled={isSorting}>Shuffle</Button>
+        </ButtonContainer>
         {warningText && <p className={styles.text}>Please shuffle first!</p>}
     </div>
 )}

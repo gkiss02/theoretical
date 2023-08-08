@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.element  {
+    width: 1.5rem;
+    background-color: white;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.select {
+    height: 3rem;
+    outline: none;
+    border-radius: 5px;
+    padding: 0 1rem;
+    border: none;
+}
+
+.text {
+    margin-top: 1.75rem;
+    color: red;
+    text-align: center;
+    font-size: 1.25rem;
+}
