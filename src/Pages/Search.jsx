@@ -14,6 +14,8 @@ function Search () {
     const [right, setRight] = useState(null);
     const [mid, setMid] = useState(null);
     const [actualArr, setActualArr] = useState([]);
+    const [isEmpty, setIsEmpty] = useState(false);
+    const [isSearching, setIsSearching] = useState(false);
 
     const elements = []
     for (let i = 1; i <= 50; i++) {
@@ -23,16 +25,23 @@ function Search () {
     function linearSearchHandler (event) {
         event.preventDefault();
         reset();
-        linearSearch(elements, searchedNumber, setActiveIndex, setFind, sleep)
+        if (searchedNumber == null || searchedNumber == '')  setIsEmpty(true);
+        else {
+            linearSearch(elements, searchedNumber, setActiveIndex, setFind, sleep, setIsSearching)
+        }
     }
 
     async function binarySearchHandler (event) {
         event.preventDefault();
         reset();
-        binarySearch(elements, searchedNumber, setLeft, setRight, setMid, setActualArr, setFind, sleep)
+        if (searchedNumber == null || searchedNumber == '')  setIsEmpty(true);
+        else {
+            binarySearch(elements, searchedNumber, setLeft, setRight, setMid, setActualArr, setFind, sleep, setIsSearching)
+        }
     }
 
     function searchHandler (event) {
+        if (event.target.value != '') setIsEmpty(false);
         setSearchedNumber(event.target.value)
     }
 
@@ -42,12 +51,14 @@ function Search () {
         setLeft(null);
         setRight(null);
         setMid(null);
+        setIsEmpty(false);
         setActualArr([]);
     }
 
     function resetHandler (event) {
         event.preventDefault();
         reset();
+        setSearchedNumber(''); 
     }
 
     return (
@@ -55,7 +66,8 @@ function Search () {
             <div className={styles['elements-container']}>
                 {elements.map((item) =>
                 <div key={item}
-                    className={`${styles.element} ${activeIndex === item ? styles.active : ''} 
+                    className={`${styles.element} 
+                    ${activeIndex === item ? styles.active : ''} 
                     ${actualArr.includes(item) ? styles.includes : ''} 
                     ${mid === item && (left != item && right != item) ? styles.mid : ''} 
                     ${left == item || right == item ? styles.active : ''} 
@@ -67,13 +79,19 @@ function Search () {
             </div>
             <ButtonContainer>
                 <label className={styles.label}>Enter the number to search for:</label>
-                <input type="number" className={styles['number-input']} onChange={searchHandler}></input>
+                <input type="number" 
+                    className={styles['number-input']} 
+                    onChange={searchHandler} 
+                    style={{border: isEmpty && '1.5px red solid'}}
+                    value={searchedNumber} >
+                </input>
             </ButtonContainer>
             <ButtonContainer>
-                <Button onClick={linearSearchHandler}>Linear Search</Button>
-                <Button onClick={binarySearchHandler}>Binary Search</Button>
-                <Button onClick={resetHandler}>Reset</Button>
+                <Button onClick={linearSearchHandler} disabled={isSearching}>Linear Search</Button>
+                <Button onClick={binarySearchHandler} disabled={isSearching}>Binary Search</Button>
+                <Button onClick={resetHandler} disabled={isSearching}>Reset</Button>
             </ButtonContainer>
+            <p className={styles['empty-message']} style={{visibility: isEmpty ? 'visible' : 'hidden'}}>Please enter a number first!</p>
         </div>
     )
 }

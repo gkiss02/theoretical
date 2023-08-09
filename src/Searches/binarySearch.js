@@ -1,4 +1,5 @@
-async function binarySearch(elements, target, setLeft, setRight, setMid, setActualArr, setFind, sleep) {
+async function binarySearch(elements, target, setLeft, setRight, setMid, setActualArr, setFind, sleep, setIsSearching) {
+    setIsSearching(true);
     let left = 0;
     let right = elements.length - 1;
     while (left <= right) {
@@ -7,13 +8,10 @@ async function binarySearch(elements, target, setLeft, setRight, setMid, setActu
         setRight(elements[right]);
         setLeft(elements[left]);
         setMid(elements[mid]);
-        console.log('left: ' + left);
-        console.log('right: ' + right);
         const actualArr = [];
         for (let i = left + 1; i <= right - 1; i++) {
             actualArr.push(elements[i])
         }
-        console.log('actual array: ' + actualArr);
         setActualArr(actualArr);
         if (elements[mid] == target) {
             setLeft(null);
@@ -21,6 +19,7 @@ async function binarySearch(elements, target, setLeft, setRight, setMid, setActu
             setMid(null);
             setActualArr([]);
             setFind(elements[mid]);
+            setIsSearching(false);
             return mid
         } else if (elements[mid] < target) {
             left = mid + 1;
@@ -28,6 +27,10 @@ async function binarySearch(elements, target, setLeft, setRight, setMid, setActu
             right = mid - 1;
         }
     }
+    setFind(null);
+    setIsSearching(false);
+    return -1;
+
 }
 
 export default binarySearch;
