@@ -16,6 +16,7 @@ function Search () {
     const [actualArr, setActualArr] = useState([]);
     const [isEmpty, setIsEmpty] = useState(false);
     const [isSearching, setIsSearching] = useState(false);
+    const [isFound, setIsFound] = useState(true);
 
     const elements = []
     for (let i = 1; i <= 50; i++) {
@@ -27,7 +28,7 @@ function Search () {
         reset();
         if (searchedNumber == null || searchedNumber == '')  setIsEmpty(true);
         else {
-            linearSearch(elements, searchedNumber, setActiveIndex, setFind, sleep, setIsSearching)
+            linearSearch(elements, searchedNumber, setActiveIndex, setFind, sleep, setIsSearching, setIsFound)
         }
     }
 
@@ -36,7 +37,7 @@ function Search () {
         reset();
         if (searchedNumber == null || searchedNumber == '')  setIsEmpty(true);
         else {
-            binarySearch(elements, searchedNumber, setLeft, setRight, setMid, setActualArr, setFind, sleep, setIsSearching)
+            binarySearch(elements, searchedNumber, setLeft, setRight, setMid, setActualArr, setFind, sleep, setIsSearching, setIsFound)
         }
     }
 
@@ -53,6 +54,7 @@ function Search () {
         setMid(null);
         setIsEmpty(false);
         setActualArr([]);
+        setIsFound(true);
     }
 
     function resetHandler (event) {
@@ -91,7 +93,8 @@ function Search () {
                 <Button onClick={binarySearchHandler} disabled={isSearching}>Binary Search</Button>
                 <Button onClick={resetHandler} disabled={isSearching}>Reset</Button>
             </ButtonContainer>
-            <p className={styles['empty-message']} style={{visibility: isEmpty ? 'visible' : 'hidden'}}>Please enter a number first!</p>
+            <p className={styles.text} style={{visibility: isEmpty ? 'visible' : 'hidden'}}>Please enter a number first!</p>
+            <p className={styles.text} style={{visibility: !isFound ? 'visible' : 'hidden'}}>Element is not in the array!</p>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-async function binarySearch(elements, target, setLeft, setRight, setMid, setActualArr, setFind, sleep, setIsSearching) {
+async function binarySearch(elements, target, setLeft, setRight, setMid, setActualArr, setFind, sleep, setIsSearching, setIsFound) {
     setIsSearching(true);
     let left = 0;
     let right = elements.length - 1;
@@ -27,8 +27,14 @@ async function binarySearch(elements, target, setLeft, setRight, setMid, setActu
             right = mid - 1;
         }
     }
+    setLeft(null);
+    setRight(null);
+    setMid(null);
+    setActualArr([]);
+    setIsSearching(false);
     setFind(null);
     setIsSearching(false);
+    setIsFound(false);
     return -1;
 
 }

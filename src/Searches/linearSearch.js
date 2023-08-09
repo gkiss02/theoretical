@@ -1,4 +1,4 @@
-async function linearSearch (elements, target, setActiveIndex, setFind, sleep, setIsSearching) {
+async function linearSearch (elements, target, setActiveIndex, setFind, sleep, setIsSearching, setIsFound) {
     setIsSearching(true);
     for (let i = 0; i < elements.length; i++) {
         setActiveIndex(elements[i]);
@@ -12,6 +12,7 @@ async function linearSearch (elements, target, setActiveIndex, setFind, sleep, s
     }
     setIsSearching(false);
     setActiveIndex(null);
+    setIsFound(false);
     return -1;
 };
 
