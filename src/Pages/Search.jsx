@@ -4,28 +4,7 @@ import ButtonContainer from '../UI/ControlContainer';
 import sleep from '../HelperFunctions/sleep';
 import { useState } from 'react';
 import linearSearch from '../Searches/linearSearch';
-
-async function binarySearch(array, target, setLeft, setRight, setFind, sleep) {
-    let left = 0;
-    let right = array.length - 1;
-
-    while (left <= right) {
-        const mid = Math.floor((left + right) / 2);
-
-        if (array[mid] === target) {
-            return mid;
-        } else if (array[mid] < target) {
-            await sleep(1000);
-
-            left = mid + 1;
-        } else {
-            await sleep(1000);
-
-            right = mid - 1;
-        }
-    }
-    return -1;
-}
+import binarySearch from '../Searches/binarySearch';
 
 function Search () {
     const [activeIndex, setActiveIndex] = useState(null);
@@ -33,6 +12,8 @@ function Search () {
     const [searchedNumber, setSearchedNumber] = useState(null);
     const [left, setLeft] = useState(null);
     const [right, setRight] = useState(null);
+    const [mid, setMid] = useState(null);
+    const [actualArr, setActualArr] = useState([]);
 
     const elements = []
     for (let i = 1; i <= 50; i++) {
@@ -41,23 +22,32 @@ function Search () {
 
     function linearSearchHandler (event) {
         event.preventDefault();
+        reset();
         linearSearch(elements, searchedNumber, setActiveIndex, setFind, sleep)
     }
 
-    function binarySearchHandler (event) {
+    async function binarySearchHandler (event) {
         event.preventDefault();
-        binarySearch(elements, searchedNumber, setActiveIndex, setFind, sleep)
+        reset();
+        binarySearch(elements, searchedNumber, setLeft, setRight, setMid, setActualArr, setFind, sleep)
     }
 
     function searchHandler (event) {
         setSearchedNumber(event.target.value)
     }
 
-    function resetHandler (event) {
-        event.preventDefault();
+    function reset () {
         setActiveIndex(null);
         setFind(null);
-        setSearchedNumber(null);
+        setLeft(null);
+        setRight(null);
+        setMid(null);
+        setActualArr([]);
+    }
+
+    function resetHandler (event) {
+        event.preventDefault();
+        reset();
     }
 
     return (
@@ -65,7 +55,12 @@ function Search () {
             <div className={styles['elements-container']}>
                 {elements.map((item) =>
                 <div key={item}
-                    className={`${styles.element} ${activeIndex === item ? styles.active : ''} ${find === item ? styles.find : ''}`}>
+                    className={`${styles.element} ${activeIndex === item ? styles.active : ''} 
+                    ${actualArr.includes(item) ? styles.includes : ''} 
+                    ${mid === item && (left != item && right != item) ? styles.mid : ''} 
+                    ${left == item || right == item ? styles.active : ''} 
+                    ${find === item ? styles.find : ''} 
+                    `}>
                     <p>{item}</p>
                 </div> 
                 )}
