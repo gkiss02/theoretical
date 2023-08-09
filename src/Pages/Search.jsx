@@ -93,8 +93,8 @@ function Search () {
                 <Button onClick={binarySearchHandler} disabled={isSearching}>Binary Search</Button>
                 <Button onClick={resetHandler} disabled={isSearching}>Reset</Button>
             </ButtonContainer>
-            <p className={styles.text} style={{visibility: isEmpty ? 'visible' : 'hidden'}}>Please enter a number first!</p>
-            <p className={styles.text} style={{visibility: !isFound ? 'visible' : 'hidden'}}>Element is not in the array!</p>
+            <p className={styles.text} style={{display: isEmpty ? 'block' : 'none'}}>Please enter a number first!</p>
+            <p className={styles.text} style={{display: !isFound ? 'block' : 'none'}}>Element is not in the array!</p>
         </div>
     )
 }
